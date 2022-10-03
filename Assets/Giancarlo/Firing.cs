@@ -45,10 +45,11 @@ public class Firing : MonoBehaviour
 
     public void LaserFire(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if(context.performed && controller.chargeLevel > 4)
         {
             //Add delay before spawning the LaserShot for animation
             laser = Instantiate(laserShot, controller.activeMech.transform.position, laserShot.transform.rotation);
+            controller.chargeLevel = 0;
         }
     }
 

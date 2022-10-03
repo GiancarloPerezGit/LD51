@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Controller : MonoBehaviour
@@ -14,6 +15,7 @@ public class Controller : MonoBehaviour
 
     public int chargeLevel;
     private float timeLeft;
+    private float timer = 0;
 
     public void changeMech(int mechNum)
     {
@@ -38,6 +40,7 @@ public class Controller : MonoBehaviour
 
     private void Update()
     {
+        timer += Time.deltaTime; 
         if(chargeLevel < 5)
         {
             timeLeft -= Time.deltaTime;
@@ -47,5 +50,16 @@ public class Controller : MonoBehaviour
             }
         }
         
+
+        if(timer > 2)
+        {
+            chargeLevel += 1;
+
+            if (chargeLevel > 5)
+                chargeLevel = 5;
+
+            timer = 0;
+        }
+
     }
 }
