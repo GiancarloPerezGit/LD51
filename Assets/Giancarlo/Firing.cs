@@ -41,6 +41,7 @@ public class Firing : MonoBehaviour
     {
         if(context.performed)
         {
+            //Add delay before spawning the LaserShot for animation
             laser = Instantiate(laserShot, controller.activeMech.transform.position, laserShot.transform.rotation);
         }
     }
