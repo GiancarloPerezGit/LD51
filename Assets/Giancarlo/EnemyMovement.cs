@@ -22,6 +22,8 @@ public class EnemyMovement : MonoBehaviour
         if (Vector3.Distance(this.transform.position, target) < 0.1f)
         {
             Debug.Log("dead af");
+            FindObjectOfType<PlayerHealth>().Damage(GetComponent<EnemyDamage>().damage);
+            
             Destroy(this.gameObject);
         }
     }
