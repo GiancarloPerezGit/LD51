@@ -53,6 +53,24 @@ public partial class @BattleControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FireLaser"",
+                    ""type"": ""Button"",
+                    ""id"": ""17aa1b8f-5ec6-41e9-85f2-5b63f748b7bf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SetupTurret"",
+                    ""type"": ""Button"",
+                    ""id"": ""e063db8e-4d76-4cfd-b854-5916bb460d50"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -273,6 +291,28 @@ public partial class @BattleControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""XR"",
                     ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4709fba5-7f66-4898-8f15-af33ad931d79"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FireLaser"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2b95eca9-2559-4acf-a520-42d3b6072c99"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SetupTurret"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -863,6 +903,8 @@ public partial class @BattleControls : IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+        m_Player_FireLaser = m_Player.FindAction("FireLaser", throwIfNotFound: true);
+        m_Player_SetupTurret = m_Player.FindAction("SetupTurret", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -937,6 +979,8 @@ public partial class @BattleControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
+    private readonly InputAction m_Player_FireLaser;
+    private readonly InputAction m_Player_SetupTurret;
     public struct PlayerActions
     {
         private @BattleControls m_Wrapper;
@@ -944,6 +988,8 @@ public partial class @BattleControls : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
+        public InputAction @FireLaser => m_Wrapper.m_Player_FireLaser;
+        public InputAction @SetupTurret => m_Wrapper.m_Player_SetupTurret;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -962,6 +1008,12 @@ public partial class @BattleControls : IInputActionCollection2, IDisposable
                 @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
+                @FireLaser.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireLaser;
+                @FireLaser.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireLaser;
+                @FireLaser.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireLaser;
+                @SetupTurret.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetupTurret;
+                @SetupTurret.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetupTurret;
+                @SetupTurret.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSetupTurret;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -975,6 +1027,12 @@ public partial class @BattleControls : IInputActionCollection2, IDisposable
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
+                @FireLaser.started += instance.OnFireLaser;
+                @FireLaser.performed += instance.OnFireLaser;
+                @FireLaser.canceled += instance.OnFireLaser;
+                @SetupTurret.started += instance.OnSetupTurret;
+                @SetupTurret.performed += instance.OnSetupTurret;
+                @SetupTurret.canceled += instance.OnSetupTurret;
             }
         }
     }
@@ -1134,6 +1192,8 @@ public partial class @BattleControls : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
+        void OnFireLaser(InputAction.CallbackContext context);
+        void OnSetupTurret(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

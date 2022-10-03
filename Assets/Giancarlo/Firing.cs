@@ -14,6 +14,11 @@ public class Firing : MonoBehaviour
     private float timeLeft = 1;
     private GameObject shot;
 
+    public float laserDamage;
+    public int laserChargeAmount;
+    public GameObject laserShot;
+    private GameObject laser;
+
     private void Start()
     {
         controller = GameObject.FindObjectOfType<Controller>();
@@ -29,6 +34,14 @@ public class Firing : MonoBehaviour
         if(context.performed)
         {
             firing = true;
+        }
+    }
+
+    public void LaserFire(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            laser = Instantiate(laserShot, controller.activeMech.transform.position, laserShot.transform.rotation);
         }
     }
 

@@ -12,6 +12,9 @@ public class Controller : MonoBehaviour
     public GameObject mech3;
     public GameObject mech4;
 
+    public int chargeLevel;
+    private float timeLeft;
+
     public void changeMech(int mechNum)
     {
         if(mechNum == 1)
@@ -31,5 +34,18 @@ public class Controller : MonoBehaviour
             activeMech = mech4;
         }
         activeMechNum = mechNum;
+    }
+
+    private void Update()
+    {
+        if(chargeLevel < 5)
+        {
+            timeLeft -= Time.deltaTime;
+            if (timeLeft < 0)
+            {
+                timeLeft = 10;
+            }
+        }
+        
     }
 }
