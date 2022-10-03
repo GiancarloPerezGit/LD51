@@ -12,8 +12,18 @@ public class Firing : MonoBehaviour
     public float basicFireDamage = 1;
     public GameObject basicShot;
     private float timeLeft = 1;
+    private GameObject shot;
 
+    public float laserDamage;
+    public int laserChargeAmount;
+    public GameObject laserShot;
+    private GameObject laser;
 
+    public float turretDamage;
+    public int turretChargeAmount;
+    public float turretFireDelay = 2;
+    public GameObject turretModel;
+    private GameObject turret;
 
     private void Start()
     {
@@ -33,6 +43,24 @@ public class Firing : MonoBehaviour
         }
     }
 
+    public void LaserFire(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            //Add delay before spawning the LaserShot for animation
+            laser = Instantiate(laserShot, controller.activeMech.transform.position, laserShot.transform.rotation);
+        }
+    }
+
+    public void SummonTurret(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            //Add delay before spawning the LaserShot for animation
+            turret = Instantiate(turretModel, controller.activeMech.transform.position, turretModel.transform.rotation);
+        }
+    }
+
     private void Update()
     {
         if(primed)
@@ -40,7 +68,18 @@ public class Firing : MonoBehaviour
             if(firing)
             {
                 primed = false;
-                Instantiate(basicShot, controller.activeMech.transform.position, basicShot.transform.rotation);
+                shot = Instantiate(basicShot, controller.activeMech.transform.position, basicShot.transform.rotation);
+                shot.AddComponent<Bullet>();
+                if (controller.activeMech.transform.position.x > 0)
+                {
+                    shot.GetComponent<Bullet>().target = new Vector3(100, controller.activeMech.transform.position.y, 0);
+                }
+                else
+                {
+                    shot.GetComponent<Bullet>().target = new Vector3(-100, controller.activeMech.transform.position.y, 0);
+                }
+                shot.GetComponent<Bullet>().damage = basicFireDamage;
+                shot.GetComponent<Bullet>().fire = true;
             }
         }
         else
