@@ -28,8 +28,8 @@ public class AudioManager : MonoBehaviour
     #endregion
 
     #region Fields
-    private AudioSource musicSource;
-    private AudioSource musicSource2;
+    [SerializeField]private AudioSource musicSource;
+    [SerializeField]private AudioSource musicSource2;
     private AudioSource sfxSource;
     private float musicVolume = 1;
     // Multiple musics
@@ -42,9 +42,9 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         // Create audio sources, and save them as references
-        musicSource = gameObject.AddComponent<AudioSource>();
-        musicSource2 = gameObject.AddComponent<AudioSource>();
-        sfxSource = gameObject.AddComponent<AudioSource>();
+       // musicSource = gameObject.AddComponent<AudioSource>();
+        //musicSource2 = gameObject.AddComponent<AudioSource>();
+       // sfxSource = gameObject.AddComponent<AudioSource>();
 
         // Make sure to enable loop on music sources
         musicSource.loop = true;
