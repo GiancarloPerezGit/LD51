@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    private float speed = 0.005f;
+    public float speed = 0.005f;
     // Start is called before the first frame update
     private bool spawnMove = false;
     private Vector3 target;
