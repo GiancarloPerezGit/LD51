@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -10,16 +11,83 @@ public class EnemySpawner : MonoBehaviour
     public GameObject laneFour;
 
     public GameObject basicEnemy;
+    public GameObject mediumEnemy;
+
+    public GameObject advancedEnemy;
     public Wave[] waves;
 
+    public TargetDummy targetUp; //the gameobject that the enemies are following when they spawn in
+    public TargetDummy targetDown;
+
+    private float timer = 0.0f;
+    private int waveIndex = 0;
     void Start()
     {
-        
+        Debug.Log("Doing Wave " + waveIndex + 1 + "!!! ");
+        DoWave(waves[waveIndex]);
+        waveIndex++;
     }
 
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
+
+        if(timer > 15.0f)//assumption that a new round starts every 15 secs
+        {
+            if (waveIndex < waves.Length)
+            {
+                Debug.Log("Doing Wave " + waveIndex + "!!! ");
+                DoWave(waves[waveIndex]);
+                waveIndex++;
+                timer = 0.0f;
+            }
+        }
         
     }
+
+    public void DoWave(Wave waveObj)
+    {
+        //spawn x basic enemies in the four random lanes and make them go towards mech
+        StartCoroutine(SpawnEnemy(waveObj.basicEnemyAmount, basicEnemy));
+        StartCoroutine(SpawnEnemy(waveObj.mediumEnemyAmount, mediumEnemy));
+        StartCoroutine(SpawnEnemy(waveObj.advancedEnemyAmount, advancedEnemy));
+    }
+
+
+    private IEnumerator SpawnEnemy(int enemyAmt, GameObject enemyPrefab)
+    {
+        int amt = enemyAmt; 
+        for(int i = 0; i < amt; i++)
+        {
+            int x = Random.Range(0, 4);
+            switch(x)
+            {
+                case 0:
+                    GameObject go = Instantiate(enemyPrefab, laneOne.transform.position, Quaternion.identity);
+                    go.GetComponent<EnemyMovement>().Move(targetUp.gameObject.transform.position); 
+                    break;
+
+                    case 1:
+                    GameObject go1 = Instantiate(enemyPrefab, laneTwo.transform.position, Quaternion.identity);
+                    go1.GetComponent<EnemyMovement>().Move(targetDown.gameObject.transform.position);
+                    break;
+
+                case 2:
+                    GameObject go3 = Instantiate(enemyPrefab, laneThree.transform.position, Quaternion.identity);
+                    go3.GetComponent<EnemyMovement>().Move(targetDown.gameObject.transform.position);
+
+                    break;
+
+                case 3:
+
+                    GameObject go4 = Instantiate(enemyPrefab, laneFour.transform.position, Quaternion.identity);
+                    go4.GetComponent<EnemyMovement>().Move(targetUp.gameObject.transform.position);
+                    break; 
+            }
+            yield return new WaitForSeconds((10 / enemyAmt) + Random.Range(-1.0f, 1.0f)); //make it now spawn at exact same time
+        }
+        
+    }
+
 }
