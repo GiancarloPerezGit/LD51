@@ -19,6 +19,7 @@ public class EnemySpawner : MonoBehaviour
     public TargetDummy targetUp; //the gameobject that the enemies are following when they spawn in
     public TargetDummy targetDown;
 
+    public float newRound = 15.0f;
     private float timer = 0.0f;
     private int waveIndex = 0;
     void Start()
@@ -33,7 +34,7 @@ public class EnemySpawner : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if(timer > 15.0f)//assumption that a new round starts every 15 secs
+        if(timer > newRound)//assumption that a new round starts every 15 secs
         {
             if (waveIndex < waves.Length)
             {
@@ -65,11 +66,13 @@ public class EnemySpawner : MonoBehaviour
             {
                 case 0:
                     GameObject go = Instantiate(enemyPrefab, laneOne.transform.position, Quaternion.identity);
+                    go.transform.Rotate(0.0f,180.0f,0.0f);
                     go.GetComponent<EnemyMovement>().Move(targetUp.gameObject.transform.position); 
                     break;
 
                     case 1:
                     GameObject go1 = Instantiate(enemyPrefab, laneTwo.transform.position, Quaternion.identity);
+                    go1.transform.Rotate(0.0f, 180.0f, 0.0f);
                     go1.GetComponent<EnemyMovement>().Move(targetDown.gameObject.transform.position);
                     break;
 

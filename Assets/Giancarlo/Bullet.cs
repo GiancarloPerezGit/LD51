@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     public float damage;
     public Vector3 target;
-    public float speed = 0.01f;
+    public float speed = 1.0f;
     public bool fire = false;
 
     private void OnCollisionEnter(Collision collision)
