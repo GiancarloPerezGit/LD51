@@ -612,6 +612,42 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 0c5c10ca-2e9f-4c6a-85d0-fc3f5cb64132
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5fab4632-54c3-4524-8dc7-d9ec54524eb1
+    m_ActionName: Player/Pause[/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1836131070}
+        m_TargetAssemblyTypeName: Firing, Assembly-CSharp
+        m_MethodName: LaserFire
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6a247f77-2cd4-4e49-93d5-012667b490ea
+    m_ActionName: Player/FireLaser[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1836131070}
+        m_TargetAssemblyTypeName: Firing, Assembly-CSharp
+        m_MethodName: SummonTurret
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fa40616e-436f-44b1-bec5-eebd56d118c1
+    m_ActionName: Player/SummonTurret[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -651,6 +687,7 @@ MonoBehaviour:
   mech2: {fileID: 1121008849}
   mech3: {fileID: 627079401}
   mech4: {fileID: 1317081342}
+  chargeLevel: 0
 --- !u!114 &1236862378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -999,6 +1036,13 @@ MonoBehaviour:
   basicFireDelay: 0.4
   basicFireDamage: 1
   basicShot: {fileID: 5652945423533374784, guid: 20a039d9a9eb52a499f98c047a13c95e, type: 3}
+  laserDamage: 0
+  laserChargeAmount: 0
+  laserShot: {fileID: 0}
+  turretDamage: 0
+  turretChargeAmount: 0
+  turretFireDelay: 2
+  turretModel: {fileID: 0}
 --- !u!4 &1836131071
 Transform:
   m_ObjectHideFlags: 0

@@ -19,6 +19,12 @@ public class Firing : MonoBehaviour
     public GameObject laserShot;
     private GameObject laser;
 
+    public float turretDamage;
+    public int turretChargeAmount;
+    public float turretFireDelay = 2;
+    public GameObject turretModel;
+    private GameObject turret;
+
     private void Start()
     {
         controller = GameObject.FindObjectOfType<Controller>();
@@ -43,6 +49,15 @@ public class Firing : MonoBehaviour
         {
             //Add delay before spawning the LaserShot for animation
             laser = Instantiate(laserShot, controller.activeMech.transform.position, laserShot.transform.rotation);
+        }
+    }
+
+    public void SummonTurret(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            //Add delay before spawning the LaserShot for animation
+            turret = Instantiate(turretModel, controller.activeMech.transform.position, turretModel.transform.rotation);
         }
     }
 
