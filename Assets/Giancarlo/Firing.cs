@@ -12,8 +12,7 @@ public class Firing : MonoBehaviour
     public float basicFireDamage = 1;
     public GameObject basicShot;
     private float timeLeft = 1;
-
-
+    private GameObject shot;
 
     private void Start()
     {
@@ -40,7 +39,18 @@ public class Firing : MonoBehaviour
             if(firing)
             {
                 primed = false;
-                Instantiate(basicShot, controller.activeMech.transform.position, basicShot.transform.rotation);
+                shot = Instantiate(basicShot, controller.activeMech.transform.position, basicShot.transform.rotation);
+                shot.AddComponent<Bullet>();
+                if (controller.activeMech.transform.position.x > 0)
+                {
+                    shot.GetComponent<Bullet>().target = new Vector3(100, controller.activeMech.transform.position.y, 0);
+                }
+                else
+                {
+                    shot.GetComponent<Bullet>().target = new Vector3(-100, controller.activeMech.transform.position.y, 0);
+                }
+                shot.GetComponent<Bullet>().damage = basicFireDamage;
+                shot.GetComponent<Bullet>().fire = true;
             }
         }
         else
