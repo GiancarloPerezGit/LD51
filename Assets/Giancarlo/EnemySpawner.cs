@@ -85,7 +85,7 @@ public class EnemySpawner : MonoBehaviour
                     go4.GetComponent<EnemyMovement>().Move(targetUp.gameObject.transform.position);
                     break; 
             }
-            yield return new WaitForSeconds((10 / enemyAmt) + Random.Range(-1.0f, 1.0f)); //make it now spawn at exact same time
+            yield return new WaitForSeconds((10 / enemyAmt) + Random.Range(1.0f, 2.0f)); //make it now spawn at exact same time
         }
         
     }
