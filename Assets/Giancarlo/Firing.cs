@@ -74,6 +74,7 @@ public class Firing : MonoBehaviour
                 if (controller.activeMech.transform.position.x > 0)
                 {
                     shot.GetComponent<Bullet>().target = new Vector3(100, controller.activeMech.transform.position.y, 0);
+                    shot.GetComponent<Bullet>().transform.Rotate(0.0f, 180.0f, 0.0f);
                 }
                 else
                 {
