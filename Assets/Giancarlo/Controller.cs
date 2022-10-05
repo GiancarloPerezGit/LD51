@@ -14,8 +14,10 @@ public class Controller : MonoBehaviour
     public GameObject mech4;
 
     public int chargeLevel;
-    private float timeLeft;
+    private float timeLeft = 10;
     private float timer = 0;
+
+    public GameObject chargeLevelUI;
 
     public void changeMech(int mechNum)
     {
@@ -38,28 +40,46 @@ public class Controller : MonoBehaviour
         activeMechNum = mechNum;
     }
 
+    public void ChangeChargeLevel(int amount)
+    {
+        chargeLevel += amount;
+        for(int i = 0; i <= 5; i++)
+        {
+            if(i <= chargeLevel && i != 0)
+            {
+                chargeLevelUI.transform.GetChild(i - 1).GetComponent<SpriteRenderer>().color = Color.green;
+            }
+            else if(i > 0)
+            {
+                chargeLevelUI.transform.GetChild(i - 1).GetComponent<SpriteRenderer>().color = Color.white;
+            }
+        }
+    }
+
     private void Update()
     {
-        timer += Time.deltaTime; 
+        //timer += Time.deltaTime; 
         if(chargeLevel < 5)
         {
             timeLeft -= Time.deltaTime;
-            if (timeLeft < 0)
+            if (timeLeft <= 0)
             {
+                ChangeChargeLevel(1);
                 timeLeft = 10;
             }
         }
         
+        
 
-        if(timer > 2)
-        {
-            chargeLevel += 1;
+        //if(timer > 2)
+        //{
+        //    chargeLevel += 1;
 
-            if (chargeLevel > 5)
-                chargeLevel = 5;
+        //    if (chargeLevel > 5)
+        //        chargeLevel = 5;
 
-            timer = 0;
-        }
+        //    timer = 0;
+        //}
 
     }
 }

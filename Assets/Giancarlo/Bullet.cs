@@ -9,11 +9,6 @@ public class Bullet : MonoBehaviour
     public float speed = 1.0f;
     public bool fire = false;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var health = collision.gameObject.GetComponent<Health>();
