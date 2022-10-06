@@ -45,11 +45,11 @@ public class Firing : MonoBehaviour
 
     public void LaserFire(InputAction.CallbackContext context)
     {
-        if(context.performed && controller.chargeLevel > 4)
+        if(context.performed && controller.chargeLevel >= laserChargeAmount)
         {
             //Add delay before spawning the LaserShot for animation
             laser = Instantiate(laserShot, controller.activeMech.transform.position, laserShot.transform.rotation);
-            controller.chargeLevel = 0;
+            controller.ChangeChargeLevel(-laserChargeAmount);
         }
     }
 
@@ -74,6 +74,7 @@ public class Firing : MonoBehaviour
                 if (controller.activeMech.transform.position.x > 0)
                 {
                     shot.GetComponent<Bullet>().target = new Vector3(100, controller.activeMech.transform.position.y, 0);
+                    shot.GetComponent<Bullet>().transform.Rotate(0.0f, 180.0f, 0.0f);
                 }
                 else
                 {

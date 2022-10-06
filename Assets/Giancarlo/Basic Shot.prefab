@@ -134,7 +134,7 @@ Transform:
   m_GameObject: {fileID: 5652945423533374784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
   - {fileID: 2696957748262775885}
   m_Father: {fileID: 0}
@@ -223,7 +223,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.000000059604645, y: 0}
+  m_Offset: {x: -0.5, y: 0}
   serializedVersion: 2
   m_Radius: 0.45
 --- !u!114 &7833823714009585674
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 3
   target: {x: 0, y: 0, z: 0}
-  speed: 0.01
+  speed: 0.1
   fire: 0
 --- !u!114 &6070915685603322214
 MonoBehaviour:
