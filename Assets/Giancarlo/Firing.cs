@@ -24,9 +24,11 @@ public class Firing : MonoBehaviour
     public float turretFireDelay = 2;
     public GameObject turretModel;
     private GameObject turret;
+    private MechAudio mechAudio; 
 
     private void Start()
     {
+        mechAudio = FindObjectOfType<MechAudio>(); 
         controller = GameObject.FindObjectOfType<Controller>();
         timeLeft = basicFireDelay;
     }
@@ -39,18 +41,27 @@ public class Firing : MonoBehaviour
         }
         if(context.performed)
         {
+           
             firing = true;
         }
     }
 
     public void LaserFire(InputAction.CallbackContext context)
     {
-        if(context.performed && controller.chargeLevel >= laserChargeAmount)
+        if (context.performed && controller.chargeLevel <= laserChargeAmount) //if play context but you dont have enough charge 
+        {
+            //play robot low battery 
+           var robotAudio = FindObjectOfType<RobotFeedbackSFX>(); //will have a delay in it, so it doesnt spam
+            robotAudio.PlayRobotFeedback(robotAudio.botOpWeaponsCharging);
+        }
+        if (context.performed && controller.chargeLevel >= laserChargeAmount)
         {
             //Add delay before spawning the LaserShot for animation
             laser = Instantiate(laserShot, controller.activeMech.transform.position, laserShot.transform.rotation);
             controller.ChangeChargeLevel(-laserChargeAmount);
         }
+
+        
     }
 
     public void SummonTurret(InputAction.CallbackContext context)
@@ -82,6 +93,7 @@ public class Firing : MonoBehaviour
                 }
                 shot.GetComponent<Bullet>().damage = basicFireDamage;
                 shot.GetComponent<Bullet>().fire = true;
+                mechAudio?.PlayLaserBlast();
             }
         }
         else

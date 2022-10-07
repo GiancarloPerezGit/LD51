@@ -39,6 +39,8 @@ public class EnemySpawner : MonoBehaviour
             if (waveIndex < waves.Length)
             {
                 Debug.Log("Doing Wave " + waveIndex + "!!! ");
+                var botAudio = FindObjectOfType<RobotFeedbackSFX>();
+                botAudio.PlayRobotFeedback(botAudio.botEnemySpotted);
                 DoWave(waves[waveIndex]);
                 waveIndex++;
                 timer = 0.0f;

@@ -81,6 +81,7 @@ public class Controller : MonoBehaviour
             vcamTopLeft.Priority = 1;
         }
         activeMechNum = mechNum;
+        FindObjectOfType<MechAudio>().PlayTeleportSFX();
     }
 
     public void ChangeChargeLevel(int amount)
