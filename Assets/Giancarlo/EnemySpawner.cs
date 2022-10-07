@@ -69,25 +69,32 @@ public class EnemySpawner : MonoBehaviour
                 case 0:
                     GameObject go = Instantiate(enemyPrefab, laneOne.transform.position, Quaternion.identity);
                     go.transform.Rotate(0.0f,180.0f,0.0f);
-                    go.GetComponent<EnemyMovement>().Move(targetUp.gameObject.transform.position); 
+                    go.GetComponent<EnemyMovement>().Move(targetUp.gameObject.transform.position);
+                    go.transform.parent = this.transform;
                     break;
 
                     case 1:
                     GameObject go1 = Instantiate(enemyPrefab, laneTwo.transform.position, Quaternion.identity);
                     go1.transform.Rotate(0.0f, 180.0f, 0.0f);
                     go1.GetComponent<EnemyMovement>().Move(targetDown.gameObject.transform.position);
+                    go1.transform.parent = this.transform;
+
                     break;
 
                 case 2:
-                    GameObject go3 = Instantiate(enemyPrefab, laneThree.transform.position, Quaternion.identity);
-                    go3.GetComponent<EnemyMovement>().Move(targetDown.gameObject.transform.position);
+                    GameObject go2 = Instantiate(enemyPrefab, laneThree.transform.position, Quaternion.identity);
+                    go2.GetComponent<EnemyMovement>().Move(targetDown.gameObject.transform.position);
+                    go2.transform.parent = this.transform;
+
 
                     break;
 
                 case 3:
 
-                    GameObject go4 = Instantiate(enemyPrefab, laneFour.transform.position, Quaternion.identity);
-                    go4.GetComponent<EnemyMovement>().Move(targetUp.gameObject.transform.position);
+                    GameObject go3 = Instantiate(enemyPrefab, laneFour.transform.position, Quaternion.identity);
+                    go3.GetComponent<EnemyMovement>().Move(targetUp.gameObject.transform.position);
+                    go3.transform.parent = this.transform;
+
                     break; 
             }
             yield return new WaitForSeconds((10 / enemyAmt) + Random.Range(1.0f, 2.0f)); //make it now spawn at exact same time

@@ -93,6 +93,7 @@ public class Firing : MonoBehaviour
                 }
                 shot.GetComponent<Bullet>().damage = basicFireDamage;
                 shot.GetComponent<Bullet>().fire = true;
+                shot.transform.parent = this.transform;
                 mechAudio?.PlayLaserBlast();
             }
         }
