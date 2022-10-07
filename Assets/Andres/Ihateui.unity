@@ -420,8 +420,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e58173cc0dc3b47b0d7490b4c47cb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  play_scene: ControllerTesting
-  main_menu: 
+  playScene: SampleScene
+  mainMenu: 
+  creditsPanel: {fileID: 0}
+  menuPanel: {fileID: 0}
+  pauseMenuPanel: {fileID: 0}
+  inputScripts: []
+  mainMenuActive: 1
+  pauseMenuActive: 0
 --- !u!4 &315704407
 Transform:
   m_ObjectHideFlags: 0
