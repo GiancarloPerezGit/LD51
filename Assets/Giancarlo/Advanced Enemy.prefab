@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 17
+  enemyAudioType: 3
 --- !u!114 &8360102009199158865
 MonoBehaviour:
   m_ObjectHideFlags: 0

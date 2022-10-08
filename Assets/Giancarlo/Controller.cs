@@ -31,6 +31,7 @@ public class Controller : MonoBehaviour
     private float timeLeft = 10;
     private float timer = 0;
     public GameObject chargeLevelUI;
+    private bool gameEnded = false;
 
     private void Start()
     {
@@ -97,6 +98,44 @@ public class Controller : MonoBehaviour
             {
                 chargeLevelUI.transform.GetChild(i - 1).GetComponent<SpriteRenderer>().color = Color.white;
             }
+        }
+    }
+    public void OnEnable()
+    {
+        PlayerHealth.OnPlayerDeath += EndGameLost;
+        EnemySpawner.OnPlayerWin += EndGameWon;
+    }
+    public void OnDisable()
+    {
+        PlayerHealth.OnPlayerDeath -= EndGameLost;
+        EnemySpawner.OnPlayerWin -= EndGameWon;
+    }
+    public void EndGameLost()
+    {
+        if(gameEnded == false)
+        {
+            //splash screen stuff 
+            //disable all weapons and bots 
+            var allEnemies = FindObjectsOfType<EnemyDamage>();
+            foreach (var i in allEnemies) Destroy(i.gameObject); 
+            FindObjectOfType<EnemySpawner>().stopSpawning = true;
+            //switch to respective music 
+            FindObjectOfType<MusicManager>().PlayLoseLick();
+            gameEnded = true;
+        }
+    }
+
+    public void EndGameWon()
+    {
+        if (gameEnded == false)
+        {
+            //splash screen stuff 
+            //disable all weapons and bots 
+            FindObjectOfType<EnemySpawner>().stopSpawning = true;
+
+            //switch to respective music 
+            FindObjectOfType<MusicManager>().PlayWinLick();
+            gameEnded = true;
         }
     }
 
