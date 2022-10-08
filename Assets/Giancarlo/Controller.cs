@@ -8,7 +8,13 @@ using Cinemachine;
 public class Controller : MonoBehaviour
 {
     public GameObject activeMech;
+    public GameObject activeGun;
+    public GameObject activeSprite;
+
     public int activeMechNum = 1;
+
+    public GameObject previousMech;
+    public GameObject previousSprite;
 
     public GameObject mech1;
     public GameObject mech2;
@@ -32,6 +38,9 @@ public class Controller : MonoBehaviour
     private float timer = 0;
     public GameObject chargeLevelUI;
 
+    public bool canShoot = true;
+    public float teleportTimer = 0.2f;
+
     private void Start()
     {
         vcamWide.Priority = 1;
@@ -46,7 +55,7 @@ public class Controller : MonoBehaviour
     {
         if(mechNum == 1)
         {
-            activeMech = mech1;
+            assignActiveMech(mech1);
 
             vcamTopRight.Priority = 1;
             vcamBottomRight.Priority = 0;
@@ -55,7 +64,7 @@ public class Controller : MonoBehaviour
         }
         else if(mechNum == 2)
         {
-            activeMech = mech2;
+            assignActiveMech(mech2);
 
             vcamTopRight.Priority = 0;
             vcamBottomRight.Priority = 1;
@@ -64,7 +73,7 @@ public class Controller : MonoBehaviour
         }
         else if (mechNum == 3)
         {
-            activeMech = mech3;
+            assignActiveMech(mech3);
 
             vcamTopRight.Priority = 0;
             vcamBottomRight.Priority = 0;
@@ -73,7 +82,7 @@ public class Controller : MonoBehaviour
         }
         else if (mechNum == 4)
         {
-            activeMech = mech4;
+            assignActiveMech(mech4);
 
             vcamTopRight.Priority = 0;
             vcamBottomRight.Priority = 0;
@@ -81,7 +90,42 @@ public class Controller : MonoBehaviour
             vcamTopLeft.Priority = 1;
         }
         activeMechNum = mechNum;
+        TeleportIn();
+        TeleportOut();
     }
+
+    private void assignActiveMech(GameObject mech)
+    {
+        previousMech = activeMech;
+        previousSprite = activeSprite;
+
+        activeMech = mech;
+        activeGun = mech.transform.Find("Gun").gameObject;
+        activeSprite = mech.transform.Find("Sprite").gameObject;
+    }
+
+
+    public void TeleportIn()
+    {
+        
+        Animator animator = activeSprite.GetComponent<Animator>();
+        animator.Play("TeleportIN");
+        animator.SetTrigger("EndTeleIn");
+
+        canShoot = false;
+    }
+
+    public void TeleportOut()
+    {
+        if (previousMech)
+        {
+            Animator prevMechAnimator = previousSprite.GetComponent<Animator>();
+            prevMechAnimator.Play("TeleportOUT");
+            prevMechAnimator.SetTrigger("EndTeleOut");
+        }
+    }
+
+
 
     public void ChangeChargeLevel(int amount)
     {
@@ -110,6 +154,17 @@ public class Controller : MonoBehaviour
                 ChangeChargeLevel(1);
                 timeLeft = 10;
             }
+        }
+
+        if (canShoot == false)
+        {
+            teleportTimer -= Time.deltaTime;
+            if (teleportTimer <=0)
+            {
+                canShoot = true;
+                teleportTimer = 0.2f;
+            }
+
         }
         
         

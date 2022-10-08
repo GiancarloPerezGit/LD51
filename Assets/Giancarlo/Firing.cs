@@ -48,7 +48,7 @@ public class Firing : MonoBehaviour
         if(context.performed && controller.chargeLevel >= laserChargeAmount)
         {
             //Add delay before spawning the LaserShot for animation
-            laser = Instantiate(laserShot, controller.activeMech.transform.position, laserShot.transform.rotation);
+            laser = Instantiate(laserShot, controller.activeGun.transform.position, laserShot.transform.rotation);
             controller.ChangeChargeLevel(-laserChargeAmount);
         }
     }
@@ -69,7 +69,7 @@ public class Firing : MonoBehaviour
             if(firing)
             {
                 primed = false;
-                shot = Instantiate(basicShot, controller.activeMech.transform.position, basicShot.transform.rotation);
+                shot = Instantiate(basicShot, controller.activeGun.transform.position, basicShot.transform.rotation);
                 shot.AddComponent<Bullet>();
                 if (controller.activeMech.transform.position.x > 0)
                 {
