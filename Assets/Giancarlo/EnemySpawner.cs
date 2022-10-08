@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using System;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -19,11 +20,15 @@ public class EnemySpawner : MonoBehaviour
     public TargetDummy targetUp; //the gameobject that the enemies are following when they spawn in
     public TargetDummy targetDown;
 
+    public static event Action OnPlayerWin; //if player goes through all the waves 
+
     public float newRound = 15.0f;
     private float timer = 0.0f;
     private int waveIndex = 0;
+    public bool stopSpawning = false;
     void Start()
     {
+        stopSpawning = false;
         Debug.Log("Doing Wave " + waveIndex + 1 + "!!! ");
         DoWave(waves[waveIndex]);
         waveIndex++;
@@ -45,12 +50,20 @@ public class EnemySpawner : MonoBehaviour
                 waveIndex++;
                 timer = 0.0f;
             }
+            else
+            {
+                //you beat all the levels
+                var enemies = FindObjectsOfType<EnemyDamage>(); 
+                if (enemies.Length < 1)
+                    OnPlayerWin?.Invoke();
+            }
         }
         
     }
 
     public void DoWave(Wave waveObj)
     {
+        if (stopSpawning) return;
         //spawn x basic enemies in the four random lanes and make them go towards mech
         StartCoroutine(SpawnEnemy(waveObj.basicEnemyAmount, basicEnemy));
         StartCoroutine(SpawnEnemy(waveObj.mediumEnemyAmount, mediumEnemy));
@@ -63,7 +76,7 @@ public class EnemySpawner : MonoBehaviour
         int amt = enemyAmt; 
         for(int i = 0; i < amt; i++)
         {
-            int x = Random.Range(0, 4);
+            int x = UnityEngine.Random.Range(0, 4);
             switch(x)
             {
                 case 0:
@@ -97,7 +110,7 @@ public class EnemySpawner : MonoBehaviour
 
                     break; 
             }
-            yield return new WaitForSeconds((10 / enemyAmt) + Random.Range(1.0f, 2.0f)); //make it now spawn at exact same time
+            yield return new WaitForSeconds((10 / enemyAmt) + UnityEngine.Random.Range(1.0f, 2.0f)); //make it now spawn at exact same time
         }
         
     }
