@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
     {
         if(fire)
         {
-            transform.position = Vector3.MoveTowards(this.transform.position, target, speed);
+            transform.position = Vector3.MoveTowards(this.transform.position, target, speed * Time.deltaTime);
             if(Vector3.Distance(this.transform.position, target) < 0.1f)
             {
                 Destroy(this.gameObject);

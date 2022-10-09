@@ -33,6 +33,8 @@ public class Controller : MonoBehaviour
     [SerializeField]
     private CinemachineVirtualCamera vcamWide;
 
+    public CinemachineVirtualCamera activeCam;
+
     public int chargeLevel;
     private float timeLeft = 10;
     private float timer = 0;
@@ -44,6 +46,7 @@ public class Controller : MonoBehaviour
     private void Start()
     {
         vcamWide.Priority = 1;
+        activeCam = vcamWide;
 
         vcamTopRight.Priority = 0;
         vcamBottomRight.Priority = 0;
@@ -61,6 +64,8 @@ public class Controller : MonoBehaviour
             vcamBottomRight.Priority = 0;
             vcamBottomLeft.Priority = 0;
             vcamTopLeft.Priority = 0;
+
+            activeCam = vcamTopRight;
         }
         else if(mechNum == 2)
         {
@@ -70,6 +75,8 @@ public class Controller : MonoBehaviour
             vcamBottomRight.Priority = 1;
             vcamBottomLeft.Priority = 0;
             vcamTopLeft.Priority = 0;
+
+            activeCam = vcamBottomRight;
         }
         else if (mechNum == 3)
         {
@@ -79,6 +86,8 @@ public class Controller : MonoBehaviour
             vcamBottomRight.Priority = 0;
             vcamBottomLeft.Priority = 1;
             vcamTopLeft.Priority = 0;
+
+            activeCam = vcamBottomLeft;
         }
         else if (mechNum == 4)
         {
@@ -88,6 +97,8 @@ public class Controller : MonoBehaviour
             vcamBottomRight.Priority = 0;
             vcamBottomLeft.Priority = 0;
             vcamTopLeft.Priority = 1;
+
+            activeCam = vcamTopLeft;
         }
         activeMechNum = mechNum;
         TeleportIn();
