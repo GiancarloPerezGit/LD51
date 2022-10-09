@@ -26,6 +26,10 @@ public class Firing : MonoBehaviour
     private GameObject turret;
     private MechAudio mechAudio; 
 
+    private Animator animator;
+    public float bulletSpeed;
+    public float shotIntensity;
+
     private void Start()
     {
         mechAudio = FindObjectOfType<MechAudio>(); 
@@ -57,7 +61,7 @@ public class Firing : MonoBehaviour
         if (context.performed && controller.chargeLevel >= laserChargeAmount)
         {
             //Add delay before spawning the LaserShot for animation
-            laser = Instantiate(laserShot, controller.activeMech.transform.position, laserShot.transform.rotation);
+            laser = Instantiate(laserShot, controller.activeGun.transform.position, laserShot.transform.rotation);
             controller.ChangeChargeLevel(-laserChargeAmount);
         }
 
@@ -73,19 +77,39 @@ public class Firing : MonoBehaviour
         }
     }
 
+    public void AnimateShooting()
+    {
+        animator = controller.activeSprite.GetComponent<Animator>();
+        animator.Play("Shoot", 0, 0);
+    }
+
     private void Update()
     {
         if(primed)
         {
-            if(firing)
+            if (controller.canShoot)
             {
-                primed = false;
-                shot = Instantiate(basicShot, controller.activeMech.transform.position, basicShot.transform.rotation);
-                shot.AddComponent<Bullet>();
-                if (controller.activeMech.transform.position.x > 0)
+                if (firing)
                 {
-                    shot.GetComponent<Bullet>().target = new Vector3(100, controller.activeMech.transform.position.y, 0);
-                    shot.GetComponent<Bullet>().transform.Rotate(0.0f, 180.0f, 0.0f);
+                    primed = false;
+                    shot = Instantiate(basicShot, controller.activeGun.transform.position, basicShot.transform.rotation);
+                    shot.AddComponent<Bullet>();
+
+                    AnimateShooting();
+                    CineMachineShake.Instance.ShakeCamera(shotIntensity, .1f, controller.activeCam);
+                    
+                    if (controller.activeMech.transform.position.x > 0)
+                    {
+                        shot.GetComponent<Bullet>().target = new Vector3(100, controller.activeMech.transform.position.y, 0);
+                        shot.GetComponent<Bullet>().transform.Rotate(0.0f, 180.0f, 0.0f);
+                    }
+                    else
+                    {
+                        shot.GetComponent<Bullet>().target = new Vector3(-100, controller.activeMech.transform.position.y, 0);
+                    }
+                    shot.GetComponent<Bullet>().speed = bulletSpeed;
+                    shot.GetComponent<Bullet>().damage = basicFireDamage;
+                    shot.GetComponent<Bullet>().fire = true;
                 }
                 else
                 {

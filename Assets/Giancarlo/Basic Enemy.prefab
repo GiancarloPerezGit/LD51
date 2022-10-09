@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.005
+  distanceToBlow: 3
 --- !u!114 &5556887039244209299
 MonoBehaviour:
   m_ObjectHideFlags: 0
